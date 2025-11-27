@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Management System</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-[Poppins]">
+
+  <!-- Header / Navbar -->
+<header class="bg-blue-900 text-white shadow">
+  <nav class="max-w-6xl mx-auto flex items-center justify-between p-4">
+    <!-- Logo / Brand Name -->
+    <h1 class="text-xl font-semibold">Event Management System</h1>
+
+    <!-- Navigation Links -->
+    <ul class="flex items-center gap-6 text-sm font-medium">
+      <li>
+        <a href="{% url 'home/' %}" class="flex items-center gap-2 hover:text-blue-300 transition">
+          <i class="fa-solid fa-house"></i>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'home/create-event/' %}" class="flex items-center gap-2 hover:text-blue-300 transition">
+          <i class="fa-solid fa-plus"></i>
+          Add Event
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'home/organizer-dashboard/' %}" class="flex items-center gap-2 hover:text-blue-300 transition">
+          <i class="fa-solid fa-user-tie"></i>
+          Organizer Dashboard
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+  <!-- Main Section -->
+  <main class="max-w-4xl mx-auto p-6">
+    <section class="flex flex-col gap-6">
+
+    <!-- Search Bar -->
+      <form method="GET" class="flex justify-center mb-6">
+        <input 
+          type="text" 
+          name="search" 
+          value="{{ request.GET.search }}"
+          placeholder="Search events or location" 
+          class="w-full max-w-md px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300"
+        >
+        <button 
+          type="submit" 
+          class="ml-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+
+    {% for event in base_query %}
+      <!-- Event Card -->
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 p-5">
+        <div class="flex items-start gap-4">
+          
+          <div class="flex-1">
+            <h2 class="text-lg font-semibold text-blue-900 mb-2">{{ event.name }}</h2>
+
+            <div class="flex items-start gap-2 mb-2">
+              <a href="{% url "home/event-detail/" event.id %}">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white rounded-md p-2 transition-all" title="View Description">
+                  <i class="fa-solid fa-circle-info"></i>
+                </button>
+              </a>
+              <p class="text-sm leading-relaxed">
+                {{ event.description|slice:':50' }}...
+              </p>
+            </div>
+
+            <p class="text-sm text-gray-600">
+              Category: <span class="font-medium text-blue-600">{{ event.category }}</span>
+            </p>
+            <p class="text-sm text-gray-600">
+              Participants: <span class="font-medium">{{ event.participant_count }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-3 mt-4">
+          <a href="{% url "home/update-event/" event.id %}">
+            <button class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 px-4 rounded-md text-sm font-medium transition">
+              <i class="fa-solid fa-pen mr-1"></i> Update
+            </button>
+          </a>
+
+          <a href="{% url "home/delete-event/" event.id %}">
+            <button class="bg-red-500 hover:bg-red-600 text-white py-1.5 px-4 rounded-md text-sm font-medium transition">
+              <i class="fa-solid fa-trash mr-1"></i> Delete
+            </button>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+      
+
+
+    </section>
+  </main>
+
+
+</body>
+</html>

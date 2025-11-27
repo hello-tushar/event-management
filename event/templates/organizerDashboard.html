@@ -1,0 +1,129 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Organizer Dashboard </title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation Bar -->
+    <header class="bg-blue-900 text-white shadow">
+        <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+            <h1 class="text-xl font-semibold">Event Management System</h1>
+            <a href="{% url 'home/' %}" class="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-800">
+            <i class="fa-solid fa-house"></i> Home
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+
+        <!-- Dashboard Header -->
+        <header>
+        <h1 class="text-3xl font-bold text-gray-900 mt-2">Organizer Dashboard</h1>
+        <p class="text-gray-500 text-sm mt-1">Overview of events and participants</p>
+        </header>
+
+        <!-- Stats Grid -->
+        <p class="font-bold text-gray-700">Stats Grid</p>
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white shadow rounded-2xl p-6">
+            <h2 class="text-sm font-medium text-gray-500">Total Participants</h2>
+            <p class="mt-2 text-3xl font-bold text-gray-900">{{total_participants}}</p>
+        </div>
+
+        <a href="{% url 'home/organizer-dashboard/' %}">
+            <div class="bg-white shadow rounded-2xl p-6">
+                <h2 class="text-sm font-medium text-gray-500">Total Events</h2>
+                <p class="mt-2 text-3xl font-bold text-gray-900">{{allEventCount}}</p>
+            </div>
+        </a>
+
+        <a href="{% url 'home/organizer-dashboard/' %}?type=upcoming-event">
+            <div class="bg-white shadow rounded-2xl p-6">
+                <h2 class="text-sm font-medium text-gray-500">Upcoming Events</h2>
+                <p class="mt-2 text-3xl font-bold text-emerald-600">{{upcomingEventCount}}</p>
+            </div>
+        </a>
+
+        <a href="{% url 'home/organizer-dashboard/' %}?type=past-event">
+            <div class="bg-white shadow rounded-2xl p-6">
+                <h2 class="text-sm font-medium text-gray-500">Past Events</h2>
+                <p class="mt-2 text-3xl font-bold text-rose-600">{{pastEventCount}}</p>
+            </div>
+        </a>
+
+        </section>
+
+        <!-- Today's Events -->
+        <section>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Today's Events</h2>
+        <div class="bg-white shadow rounded-2xl overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+                <tr>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Event</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Time</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Location</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Participants</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                </tr>
+            </thead>
+            {% for event in eventToday %}
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{event.name}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.time}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.location}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.cnt}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.date}}</td>
+                    </tr>
+                    
+                </tbody>
+            {% endfor %}
+            </table>
+        </div>
+        </section>
+
+
+        <!---Events-->
+        <section>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">{{eventType}}</h2>
+        <div class="bg-white shadow rounded-2xl overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+                <tr>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Event</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Time</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Location</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Participants</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                </tr>
+            </thead>
+            {% for event in events %}
+            
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{event.name}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.time}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.location}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.cnt}}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">{{event.date}}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+            </table>
+        </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
