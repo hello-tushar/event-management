@@ -11,9 +11,20 @@
     <header class="bg-blue-900 text-white shadow">
         <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
             <h1 class="text-xl font-semibold">Event Management System</h1>
-            <a href="{% url 'home/' %}" class="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-800">
-            <i class="fa-solid fa-house"></i> Home
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="{% url 'home/' %}" class="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-800">
+                    <i class="fa-solid fa-house"></i> Home
+                </a>
+
+                <a href="{% url 'home/create-event/add-participants' %}" class="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-800">
+                    <i class="fa-solid fa-users"></i> Add Participants
+                </a>
+
+                <a href="{% url 'home/create-event/add-category' %}" class="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-800">
+                    <i class="fa-solid fa-layer-group"></i> Add Category
+                </a>
+            </div>
+
         </div>
     </header>
     <div>

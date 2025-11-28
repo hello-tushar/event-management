@@ -92,5 +92,28 @@ def organizerDashboard(request):
     return render(request, 'organizerDashboard.html', context)
 
 
+def addParticipant(request):
+    participant_form = ParticipantModelForm() # For GET
+
+    if request.method == "POST":
+        participant_form = ParticipantModelForm(request.POST)
+        if participant_form.is_valid():
+            participant_form.save()
+            return redirect('home/create-event/')
 
 
+    context = {'participant_form': participant_form}
+    return render(request, 'addParticipant.html', context)
+
+def addCategory(request):
+    category_form = CategoryModelForm() # For GET
+
+    if request.method == "POST":
+        category_form = CategoryModelForm(request.POST)
+        if category_form.is_valid():
+            category_form.save()
+            return redirect('home/create-event/')
+
+
+    context = {'category_form': category_form}
+    return render(request, 'addCategory.html', context)
